@@ -156,7 +156,7 @@ class SlipsTable
                             }
 
                             Notification::make()
-                                ->title((string) $saved)
+                                ->title('Slip gaji berhasil dibuat dan dikirim ke Whatsapp')
                                 ->success()
                                 ->send();
                         })
