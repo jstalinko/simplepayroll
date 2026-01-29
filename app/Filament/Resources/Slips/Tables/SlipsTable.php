@@ -14,6 +14,7 @@ use App\Models\Slip;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Storage;
 
 class SlipsTable
 {
