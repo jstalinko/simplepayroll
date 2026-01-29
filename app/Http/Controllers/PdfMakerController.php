@@ -49,7 +49,8 @@ class PdfMakerController extends Controller
             ])->setPaper('A4');
 
             $slipName = "SLIP-GAJI-" . str()->slug($slip->karyawan->name);
-            $save[$slip->id]['path'] = $pdf->save(storage_path('app/public/' . $slipName . '.pdf'));
+            $pdf->save(storage_path('app/public/' . $slipName . '.pdf'));
+            $save[$slip->id]['path'] = url('storage/' . $slipName . '.pdf');
             $save[$slip->id]['name'] = $slipName;
         }
         return $save;
