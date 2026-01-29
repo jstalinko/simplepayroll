@@ -61,7 +61,11 @@
     <div class="row">
         <div style="display:flex; gap:12px; align-items:center;">
             @if (!empty($logoPath) && file_exists($logoPath))
-                <img src="{{ $logoPath }}" style="height:55px; width:auto;">
+                @php
+                    $LOGOENCRYPT = base64_encode(file_get_contents($logoPath));
+                    $FILETYPE = mime_content_type($logoPath);
+                @endphp
+                <img src="data:{{ $FILETYPE }};base64,{{ $LOGOENCRYPT }}" style="height:55px; width:auto;">
             @endif
 
             <div>
