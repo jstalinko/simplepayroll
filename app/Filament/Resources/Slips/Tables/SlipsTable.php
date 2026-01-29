@@ -11,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use App\Models\Slip;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 
@@ -136,6 +137,23 @@ class SlipsTable
 
                             $controller = app(\App\Http\Controllers\PdfMakerController::class);
                             $saved = $controller->generateBulkPaid($ids);
+                            foreach ($ids as $id) {
+                                $slip = Slip::where('id', $id)->with('karyawan')->first();
+                                $message =
+                                    "Halo {{name}},
+                                Gaji Anda periode {{period}} sudah dibayarkan, silahkan cek dokumen slip gaji yang telah kami kirimkan.
+                                ";
+                                $piwapi = app(\App\Http\Services\PiwapiService::class);
+                                $piwapi->setRecipient($slip->karyawan->phone)
+                                    ->data([
+                                        'name' => $slip->karyawan->name,
+                                        'period' => Carbon::parse($slip->period_start)->format('d M Y') . ' - ' . Carbon::parse($slip->period_end)->format('d M Y'),
+                                    ])
+                                    ->message($message)
+                                    ->document($saved[$id]['path'], 'pdf')
+                                    ->send();
+                                usleep(500);
+                            }
 
                             Notification::make()
                                 ->title((string) $saved)
