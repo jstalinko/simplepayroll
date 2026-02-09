@@ -21,6 +21,8 @@ class SlipPrintController extends Controller
         $logoPath = null;
         if (! empty($company['company_logo']) && Storage::disk('public')->exists($company['company_logo'])) {
             $logoPath = public_path('storage/' . $company['company_logo']); // absolute path
+        }else{
+            $logoPath = public_path('logo.png'); // default logo path
         }
 
         $pdf = Pdf::loadView('pdf.slip', [

@@ -100,7 +100,7 @@
         <tr>
             <td><b>Email</b></td>
             <td>: {{ $slip->karyawan->email ?? '-' }}</td>
-            <td><b>Phone</b></td>
+            <td><b>Telepon</b></td>
             <td>: {{ $slip->karyawan->phone ?? '-' }}</td>
         </tr>
     </table>
@@ -108,25 +108,25 @@
     <table>
         <thead>
             <tr>
-                <th>Income</th>
-                <th class="right">Amount</th>
+                <th>Pendapatan</th>
+                <th class="right">Jumlah</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Main Salary</td>
+                <td>Gaji Pokok</td>
                 <td class="right">Rp {{ number_format($slip->main_salary ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td>Overtime Pay</td>
+                <td>Gaji Lembur</td>
                 <td class="right">Rp {{ number_format($slip->overtime_pay ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td>Meal Pay</td>
+                <td>Uang Makan</td>
                 <td class="right">Rp {{ number_format($slip->meal_pay ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td>Transportation Pay</td>
+                <td>Uang Transport</td>
                 <td class="right">Rp {{ number_format($slip->transportation_pay ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr>
@@ -137,7 +137,7 @@
                 <td class="right">Rp {{ number_format($slip->bonus ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr class="summary">
-                <td>Total Income</td>
+                <td>Total Pendapatan</td>
                 <td class="right">Rp {{ number_format($slip->total_salary ?? 0, 0, ',', '.') }}</td>
             </tr>
         </tbody>
@@ -146,32 +146,32 @@
     <table>
         <thead>
             <tr>
-                <th>Deduction</th>
-                <th class="right">Amount</th>
+                <th>Potongan</th>
+                <th class="right">Jumlah</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Late Deduction</td>
+                <td>Potongan Keterlambatan</td>
                 <td class="right">Rp {{ number_format($slip->late_deduction ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td>Absent Deduction</td>
+                <td>Potongan Absensi</td>
                 <td class="right">Rp {{ number_format($slip->absent_deduction ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td>Break Stuff Deduction</td>
+                <td>Potongan Barang Rusak</td>
                 <td class="right">Rp {{ number_format($slip->break_stuff_deduction ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <td>Other Deduction @if ($slip->other_deduction_description)
+                <td>Potongan Lainnya @if ($slip->other_deduction_description)
                         <span class="muted">({{ $slip->other_deduction_description }})</span>
                     @endif
                 </td>
                 <td class="right">Rp {{ number_format($slip->other_deduction ?? 0, 0, ',', '.') }}</td>
             </tr>
             <tr class="summary">
-                <td>Total Deduction</td>
+                <td>Total Potongan</td>
                 <td class="right">Rp {{ number_format($slip->total_deduction ?? 0, 0, ',', '.') }}</td>
             </tr>
         </tbody>
@@ -180,7 +180,7 @@
     <table>
         <tbody>
             <tr class="summary">
-                <td><b>NET SALARY</b></td>
+                <td><b>GAJI BERSIH</b></td>
                 <td class="right"><b>Rp {{ number_format($slip->total_net_salary ?? 0, 0, ',', '.') }}</b></td>
             </tr>
         </tbody>

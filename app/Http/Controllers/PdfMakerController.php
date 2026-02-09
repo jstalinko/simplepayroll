@@ -36,6 +36,8 @@ class PdfMakerController extends Controller
         $logoPath = null;
         if (! empty($company['company_logo']) && Storage::disk('public')->exists($company['company_logo'])) {
             $logoPath = public_path('storage/' . $company['company_logo']); // absolute path
+        }else{
+            $logoPath = public_path('logo.png'); // default logo path
         }
 
         $slips = Slip::where('status', 'paid')->with('karyawan')->whereIn('id', $ids)->get();

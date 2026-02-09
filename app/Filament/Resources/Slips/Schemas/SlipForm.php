@@ -42,6 +42,7 @@ class SlipForm
     {
         return $schema->components([
             Select::make('karyawan_id')
+                ->label('Karyawan')
                 ->relationship('karyawan', 'name')
                 ->required()
                 ->searchable()
@@ -59,16 +60,19 @@ class SlipForm
 
             Section::make('Periode')->schema([
                 DatePicker::make('period_start')
+                    ->label('Tanggal Mulai')
                     ->required()
                     ->default(fn() => now()->subMonth()->startOfMonth()),
 
                 DatePicker::make('period_end')
+                    ->label('Tanggal Selesai')
                     ->required()
                     ->default(fn() => now()->subMonth()->endOfMonth()),
             ])->columns(2)->columnSpanFull(),
 
-            Section::make('Income')->schema([
+            Section::make('Pendapatan')->schema([
                 TextInput::make('main_salary')
+                    ->label('Gaji Pokok')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -77,6 +81,7 @@ class SlipForm
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
                 TextInput::make('overtime_pay')
+                    ->label('Gaji Lembur')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -85,6 +90,7 @@ class SlipForm
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
                 TextInput::make('meal_pay')
+                    ->label('Uang Makan')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -93,6 +99,7 @@ class SlipForm
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
                 TextInput::make('transportation_pay')
+                    ->label('Uang Transport')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -101,6 +108,7 @@ class SlipForm
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
                 TextInput::make('bonus')
+                    ->label('Bonus')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -108,11 +116,13 @@ class SlipForm
                     ->live()
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
-                TextInput::make('bonus_description'),
+                TextInput::make('bonus_description')
+                    ->label('Keterangan Bonus'),
             ]),
 
-            Section::make('Deduction')->schema([
+            Section::make('Potongan')->schema([
                 TextInput::make('late_deduction')
+                    ->label('Potongan Keterlambatan')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -121,6 +131,7 @@ class SlipForm
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
                 TextInput::make('absent_deduction')
+                    ->label('Potongan Absensi')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -129,6 +140,7 @@ class SlipForm
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
                 TextInput::make('break_stuff_deduction')
+                    ->label('Potongan Barang Rusak')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -137,6 +149,7 @@ class SlipForm
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
                 TextInput::make('other_deduction')
+                    ->label('Potongan Lainnya')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
@@ -144,10 +157,12 @@ class SlipForm
                     ->live()
                     ->afterStateUpdated(fn(Set $set, Get $get) => self::recalc($set, $get)),
 
-                TextInput::make('other_deduction_description'),
+                TextInput::make('other_deduction_description')
+                    ->label('Keterangan Potongan Lainnya'),
             ]),
 
             TextInput::make('total_salary')
+                ->label('Total Pendapatan')
                 ->required()
                 ->numeric()
                 ->readOnly()
@@ -156,6 +171,7 @@ class SlipForm
                 ->default(0),
 
             TextInput::make('total_deduction')
+                ->label('Total Potongan')
                 ->required()
                 ->numeric()
                 ->readOnly()
@@ -164,6 +180,7 @@ class SlipForm
                 ->default(0),
 
             TextInput::make('total_net_salary')
+                ->label('Gaji Bersih')
                 ->required()
                 ->numeric()
                 ->readOnly()
@@ -172,12 +189,13 @@ class SlipForm
                 ->default(0),
 
             Select::make('status')
+                ->label('Status')
                 ->required()
                 ->default('draft')
                 ->options([
                     'draft' => 'Draft',
-                    'paid' => 'Paid',
-                    'unpaid' => 'Unpaid',
+                    'paid' => 'Dibayar',
+                    'unpaid' => 'Belum Dibayar',
                 ]),
         ]);
     }
